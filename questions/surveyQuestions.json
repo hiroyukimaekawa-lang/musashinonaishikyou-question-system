@@ -9,14 +9,21 @@
     "id": "examType",
     "type": "select",
     "title": "②施術に関して",
-    "options": ["胃カメラ", "大腸カメラ", "両方"],
+    "options": [
+      "胃カメラ",
+      "大腸カメラ",
+      "両方"
+    ],
     "required": true
   },
   {
     "id": "previousExam",
     "type": "select",
     "title": "③以前当院で検査を受けたことはありますか？",
-    "options": ["はい", "いいえ"],
+    "options": [
+      "はい",
+      "いいえ"
+    ],
     "required": true
   },
   {
@@ -70,7 +77,13 @@
     "id": "reason",
     "type": "select",
     "title": "⑤当院を選ばれた理由は？",
-    "options": ["HP", "知人紹介", "通りすがり", "看板", "医療機関からの紹介"],
+    "options": [
+      "HP",
+      "知人紹介",
+      "通りすがり",
+      "看板",
+      "医療機関からの紹介"
+    ],
     "required": true
   },
   {

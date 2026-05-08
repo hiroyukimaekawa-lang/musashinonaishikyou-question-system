@@ -14,16 +14,13 @@ export function SubmitButton({ title, onPress, disabled, className = '' }: Props
       activeOpacity={0.8}
       onPress={onPress}
       disabled={disabled}
-      className={`h-16 flex-row items-center justify-center rounded-full px-12 ${
+      className={`h-16 flex-row items-center justify-center rounded-full px-12 shadow-lg ${
         disabled ? 'bg-gray-300' : 'bg-primary'
       } ${className}`}
-      style={{
+      style={!disabled ? {
         shadowColor: '#5E969E',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 4,
-      }}
+        shadowOpacity: 0.3,
+      } : {}}
     >
       {disabled ? (
         <ActivityIndicator color="white" className="mr-3" />

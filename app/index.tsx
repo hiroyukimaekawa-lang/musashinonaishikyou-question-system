@@ -76,11 +76,13 @@ export default function SurveyScreen() {
         <View className="mb-4 flex-row items-center flex-wrap">
           {question.type === 'nps' ? (
              <View className="mr-3 h-6 w-6 items-center justify-center rounded bg-primary">
-                <Text className="text-white text-xs font-bold">{question.title.split('.')[0]}</Text>
+                <Text className="text-white text-xs font-bold">
+                  {question.title.match(/^\d+/)?.[0] || ''}
+                </Text>
              </View>
           ) : null}
           <Text className="font-noto text-base font-bold text-gray-800">
-            {question.type === 'nps' ? question.title.split('.').slice(1).join('.').trim() : question.title}
+            {question.type === 'nps' ? question.title.replace(/^\d+\.\s*/, '') : question.title}
           </Text>
           {question.required && question.type !== 'nps' && <RequiredBadge />}
         </View>
