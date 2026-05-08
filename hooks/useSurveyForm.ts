@@ -73,21 +73,14 @@ export function useSurveyForm() {
       const response = await fetch(hospitalConfig.gasUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'text/plain;charset=utf-8', // CORS回避のためtext/plain
+          'Content-Type': 'text/plain;charset=utf-8',
         },
         body: JSON.stringify(payload),
+        mode: 'no-cors', // CORSエラーを回避するため
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await response.json();
-      
-      if (!result.success) {
-        throw new Error(result.error || 'Failed to submit');
-      }
-
+      // no-corsモードの場合、レスポンスの中身（JSONやステータスコード）は読み取れません。
+      // fetch自体がネットワークエラーで例外を投げない限り、成功とみなします。
       return { success: true } as const;
     } catch (error) {
       return { success: false, error } as const;
