@@ -1,19 +1,18 @@
-import { Image, Text, View } from 'react-native';
-import { hospitalConfig } from '../constants/hospitalConfig';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export function Header() {
   return (
-    <View className="border-b border-gray-100 bg-white px-4 py-3 shadow-sm z-10 flex-row items-center justify-center">
-      {hospitalConfig.logoUrl ? (
-        <Image
-          source={{ uri: hospitalConfig.logoUrl }}
-          className="h-8 w-8 mr-2"
-          resizeMode="contain"
-        />
-      ) : null}
-      <Text className="text-center font-noto text-lg font-bold text-gray-800">
-        {hospitalConfig.hospitalName}
-      </Text>
+    <View className="w-full border-b border-gray-100 bg-white py-4 shadow-sm z-10">
+      <View className="flex-row items-center justify-center px-4">
+        <View className="mr-2 h-8 w-8 items-center justify-center rounded-full bg-[#5E969E20]">
+          <Ionicons name="heart" size={20} color="#5E969E" />
+        </View>
+        <Text className="font-noto text-xl font-bold tracking-tighter text-[#5E969E]">
+          むさしの内視鏡・胃腸内科クリニック
+        </Text>
+      </View>
     </View>
   );
 }

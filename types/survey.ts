@@ -9,7 +9,7 @@ export interface SurveyAnswer {
   receptionResponse: string;
   nextTime: string;
   recommend: string;
-  reason: string[];
+  reason: string;
   comments: string;
   submittedAt: string;
 }
@@ -25,7 +25,7 @@ export interface SurveyFormState {
   receptionResponse: string;
   nextTime: string;
   recommend: string;
-  reason: string[];
+  reason: string;
   comments: string;
 }
 

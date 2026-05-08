@@ -6,14 +6,15 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#3B82F6', // やさしいブルー
-          light: '#EBF5FF',
-          dark: '#2563EB',
+          DEFAULT: '#5E969E', // 落ち着いたティールカラー
+          light: '#F2F7F7',
+          dark: '#4A7A81',
         },
         surface: '#FFFFFF',
-        background: '#F8FAFC',
+        background: '#F8F9FA',
+        accent: '#D1E5E7',
         text: {
-          DEFAULT: '#1E293B',
+          DEFAULT: '#334155',
           muted: '#64748B',
         },
         error: '#EF4444',

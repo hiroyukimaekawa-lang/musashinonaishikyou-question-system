@@ -14,7 +14,7 @@ const INITIAL_STATE: SurveyFormState = {
   receptionResponse: '',
   nextTime: '',
   recommend: '',
-  reason: [],
+  reason: '',
   comments: '',
 };
 

@@ -9,34 +9,24 @@ const scoreOptions = Array.from({ length: 10 }, (_, idx) => idx + 1);
 
 export function NPSSelector({ value, onChange }: Props) {
   return (
-    <View>
-      <View className="flex-row justify-between w-full">
+    <View className="w-full">
+      <View className="flex-row justify-between w-full px-1">
         {scoreOptions.map((score) => {
           const selected = value === score;
           return (
             <Pressable
               key={score}
               onPress={() => onChange(score)}
-              className={`h-[28px] w-[28px] sm:h-9 sm:w-9 items-center justify-center rounded-full border ${selected
-                ? 'border-[#4a7a95] bg-[#4a7a95]'
-                : 'border-[#b0c4d0] bg-white'
-                }`}
-              style={
+              className={`h-[32px] w-[32px] sm:h-10 sm:w-10 items-center justify-center rounded-full border ${
                 selected
-                  ? Platform.OS === 'ios'
-                    ? {
-                      shadowColor: '#4a7a95',
-                      shadowOffset: { width: 0, height: 3 },
-                      shadowOpacity: 0.3,
-                      shadowRadius: 5,
-                    }
-                    : { elevation: 4 }
-                  : undefined
-              }
+                  ? 'border-primary bg-primary'
+                  : 'border-gray-300 bg-white'
+              }`}
             >
               <Text
-                className={`font-noto text-[11px] sm:text-sm font-bold ${selected ? 'text-white' : 'text-[#4a7a95]'
-                  }`}
+                className={`font-noto text-xs sm:text-sm font-bold ${
+                  selected ? 'text-white' : 'text-primary'
+                }`}
               >
                 {score}
               </Text>
@@ -46,14 +36,14 @@ export function NPSSelector({ value, onChange }: Props) {
       </View>
 
       <View className="mt-4 flex-row items-center px-1">
-        <Text className="font-noto text-xs text-[#8b8b8b]">←</Text>
-        <View className="mx-1 h-[1px] flex-1 bg-[#8b8b8b]" />
-        <Text className="font-noto text-xs text-[#8b8b8b]">→</Text>
+        <Text className="font-noto text-[10px] text-gray-400">←</Text>
+        <View className="mx-1 h-[1px] flex-1 bg-gray-200" />
+        <Text className="font-noto text-[10px] text-gray-400">→</Text>
       </View>
 
       <View className="mt-1 flex-row items-center justify-between px-1">
-        <Text className="font-noto text-[12px] text-[#556977]">満足していない</Text>
-        <Text className="font-noto text-[12px] text-[#556977]">満足した</Text>
+        <Text className="font-noto text-[11px] text-gray-500">非常に不満</Text>
+        <Text className="font-noto text-[11px] text-gray-500">非常に満足</Text>
       </View>
     </View>
   );
