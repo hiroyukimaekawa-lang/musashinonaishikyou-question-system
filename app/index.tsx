@@ -61,7 +61,7 @@ export default function SurveyScreen() {
     if (question.type === 'section_title') {
       return (
         <View key={question.id} className="mb-6 mt-4">
-          <Text className="font-noto text-base font-bold text-gray-700">
+          <Text className="font-noto text-base font-bold text-gray-800">
             {question.title} <Text className="text-[#D34141] font-normal">※必須</Text>
           </Text>
         </View>

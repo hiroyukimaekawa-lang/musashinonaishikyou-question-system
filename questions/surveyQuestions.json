@@ -8,7 +8,7 @@
   {
     "id": "examType",
     "type": "select",
-    "title": "②施術に関して",
+    "title": "②検査について",
     "options": [
       "胃カメラ",
       "大腸カメラ",
@@ -29,7 +29,7 @@
   {
     "id": "evaluationTitle",
     "type": "section_title",
-    "title": "④下記は10段階評価でお願いします"
+    "title": "④以下の各項目について、当てはまる評価をお選びください"
   },
   {
     "id": "examPain",
