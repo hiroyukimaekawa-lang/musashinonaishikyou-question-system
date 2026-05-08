@@ -44,7 +44,11 @@ export default function ThanksScreen() {
             end={{ x: 1, y: 1 }}
             className="w-full h-[180px] items-center justify-center sm:h-[220px]"
           >
-            <Text className="font-noto text-2xl sm:text-3xl font-bold text-white tracking-widest">
+            <Text 
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              className="font-noto text-xl sm:text-3xl font-bold text-white tracking-widest px-4"
+            >
               ご協力、ありがとうございました。
             </Text>
           </LinearGradient>
@@ -53,7 +57,7 @@ export default function ThanksScreen() {
         <View className="w-full max-w-[760px] px-6">
           <View className="mb-8 items-center">
             <Text className="text-center font-noto text-base text-gray-600 leading-relaxed">
-              アンケートのご回答が完了しました。{"\n"}ご協力いただき、心より感謝申し上げます。
+              アンケートのご回答が完了しました。ご協力いただき、心より感謝申し上げます。
             </Text>
           </View>
 
@@ -68,7 +72,7 @@ export default function ThanksScreen() {
               Googleの口コミにご協力ください
             </Text>
             <Text className="font-noto text-sm text-gray-500 leading-relaxed mb-6">
-              当院のサービス向上、また他の患者さまの参考のため、Googleへの口コミをご入力いただけますと幸いです。{"\n"}いただいたご意見は、大切に拝見させていただきます。
+              当院のサービス向上、また他の患者さまの参考のため、Googleへの口コミをご入力いただけますと幸いです。いただいたご意見は、大切に拝見させていただきます。
             </Text>
           </View>
 

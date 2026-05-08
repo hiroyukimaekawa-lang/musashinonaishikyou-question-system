@@ -9,7 +9,11 @@ export function Header() {
         <View className="mr-2 h-8 w-8 items-center justify-center rounded-full bg-[#5E969E20]">
           <Ionicons name="heart" size={20} color="#5E969E" />
         </View>
-        <Text className="font-noto text-xl font-bold tracking-tighter text-[#5E969E]">
+        <Text 
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          className="font-noto text-lg sm:text-xl font-bold tracking-tighter text-[#5E969E] flex-1"
+        >
           むさしの内視鏡・胃腸内科クリニック
         </Text>
       </View>
