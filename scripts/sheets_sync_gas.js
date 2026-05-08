@@ -1,40 +1,80 @@
 /**
- * Google Apps Script (GAS) to receive Firestore data and populate a Spreadsheet.
- * 
- * Instructions:
- * 1. Create a new Google Sheet.
- * 2. Go to Extensions > Apps Script.
- * 3. Paste this code and save.
- * 4. Click "Deploy" > "New Deployment".
- * 5. Select "Web App", set "Execute as" to "Me", and "Who has access" to "Anyone".
- * 6. Copy the Web App URL and set it in useSyncToSheets.ts.
+ * 武蔵野内視鏡クリニック向け患者アンケートシステム用 GAS
+ *
+ * 設定手順:
+ * 1. 新しいGoogleスプレッドシートを作成。
+ * 2. 拡張機能 > Apps Script を開く。
+ * 3. このコードを貼り付けて保存。
+ * 4. デプロイ > 新しいデプロイ をクリック。
+ * 5. 「ウェブアプリ」を選択、アクセスできるユーザーを「全員」にする。
+ * 6. ウェブアプリのURLをコピーして、環境変数の EXPO_PUBLIC_GAS_URL に設定。
  */
 
 function doPost(e) {
+  try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // JSONデータのパース
     var data = JSON.parse(e.postData.contents);
+    
+    if (!data) {
+      return createJsonResponse({ error: "No data" }, 400);
+    }
 
-    if (data.length === 0) return ContentService.createTextOutput("No data");
+    // ヘッダーがなければ追加する（初回のみ実行される）
+    if (sheet.getLastRow() === 0) {
+      var headers = [
+        "回答日時",
+        "患者様のお名前",
+        "検査種別",
+        "以前受診有無",
+        "検査苦痛",
+        "医師説明",
+        "待ち時間",
+        "看護師対応",
+        "受付対応",
+        "次回利用意向",
+        "推奨意向",
+        "来院理由",
+        "自由記述"
+      ];
+      sheet.appendRow(headers);
+    }
 
-    // Clear existing data (except header)
-    sheet.clearContents();
+    // データの追記 (指定された順序で配列を作成)
+    var rowData = [
+      data.submittedAt,
+      data.patientName,
+      data.examType,
+      data.previousExam,
+      data.examPain,
+      data.doctorExplanation,
+      data.waitingTime,
+      data.nurseResponse,
+      data.receptionResponse,
+      data.nextTime,
+      data.recommend,
+      Array.isArray(data.reason) ? data.reason.join(", ") : data.reason,
+      data.comments || ""
+    ];
+    
+    sheet.appendRow(rowData);
 
-    // Set headers
-    var headers = ["ID", "Score", "Purpose", "Language", "Submitted At", "Is High Score", "Staff Name"];
-    sheet.appendRow(headers);
+    return createJsonResponse({ success: true, message: "Successfully appended data." });
+  } catch (error) {
+    return createJsonResponse({ success: false, error: error.message }, 500);
+  }
+}
 
-    // Append data
-    data.forEach(function (row) {
-        sheet.appendRow([
-            row.id,
-            row.score,
-            row.purpose,
-            row.language,
-            row.submittedAt,
-            row.isHighScore,
-            row.staffName
-        ]);
-    });
+function doOptions(e) {
+  // CORSプリフライトリクエスト用
+  return createJsonResponse({ message: "CORS preflight successful" });
+}
 
-    return ContentService.createTextOutput("Success");
+function createJsonResponse(data, statusCode = 200) {
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader("Access-Control-Allow-Origin", "*")
+    .setHeader("Access-Control-Allow-Methods", "POST, OPTIONS")
+    .setHeader("Access-Control-Allow-Headers", "Content-Type");
 }

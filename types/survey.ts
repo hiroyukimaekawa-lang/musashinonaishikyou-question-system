@@ -1,22 +1,32 @@
-import type { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
-
 export interface SurveyAnswer {
-  score: number;
-  purpose: string;
-  language: string;
-  submittedAt: FirebaseFirestoreTypes.Timestamp;
-  isHighScore: boolean;
-  staffName: string | null;
+  patientName: string;
+  examType: string;
+  previousExam: string;
+  examPain: string;
+  doctorExplanation: string;
+  waitingTime: string;
+  nurseResponse: string;
+  receptionResponse: string;
+  nextTime: string;
+  recommend: string;
+  reason: string[];
+  comments: string;
+  submittedAt: string;
 }
 
 export interface SurveyFormState {
-  score: number | null;
-  purpose: string | null;
-  language: string;
-  staffName: string | null;
+  patientName: string;
+  examType: string;
+  previousExam: string;
+  examPain: string;
+  doctorExplanation: string;
+  waitingTime: string;
+  nurseResponse: string;
+  receptionResponse: string;
+  nextTime: string;
+  recommend: string;
+  reason: string[];
+  comments: string;
 }
 
-export interface SurveyFormErrors {
-  score?: string;
-  purpose?: string;
-}
+export type SurveyFormErrors = Partial<Record<keyof SurveyFormState, string>>;

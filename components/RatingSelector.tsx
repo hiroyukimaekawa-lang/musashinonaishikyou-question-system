@@ -7,9 +7,9 @@ interface Props {
   hasError?: boolean;
 }
 
-export function RadioGroup({ options, value, onChange, hasError }: Props) {
+export function RatingSelector({ options, value, onChange, hasError }: Props) {
   return (
-    <View className="flex-row flex-wrap gap-3">
+    <View className="flex-col gap-2">
       {options.map((option) => {
         const isSelected = value === option;
         return (
@@ -17,20 +17,20 @@ export function RadioGroup({ options, value, onChange, hasError }: Props) {
             key={option}
             activeOpacity={0.7}
             onPress={() => onChange(option)}
-            className={`flex-row items-center rounded-lg border p-4 ${
+            className={`flex-row items-center rounded-lg border p-4 w-full ${
               isSelected ? 'border-primary bg-primary-light' : 'border-gray-200 bg-white'
             } ${hasError ? 'border-error' : ''}`}
           >
             <View
-              className={`mr-3 h-5 w-5 items-center justify-center rounded-full border-2 ${
+              className={`mr-4 h-6 w-6 items-center justify-center rounded-full border-2 ${
                 isSelected ? 'border-primary' : 'border-gray-300'
               }`}
             >
-              {isSelected && <View className="h-2.5 w-2.5 rounded-full bg-primary" />}
+              {isSelected && <View className="h-3 w-3 rounded-full bg-primary" />}
             </View>
             <Text
               className={`font-noto text-base ${
-                isSelected ? 'font-medium text-primary-dark' : 'text-gray-700'
+                isSelected ? 'font-bold text-primary-dark' : 'text-gray-700'
               }`}
             >
               {option}

@@ -1,82 +1,94 @@
-import { useMemo, useState } from 'react';
-import firestore from '@react-native-firebase/firestore';
-
-import { CONFIG } from '@/constants/config';
-import type { SurveyAnswer, SurveyFormErrors, SurveyFormState } from '@/types/survey';
+import { useState } from 'react';
+import { hospitalConfig } from '../constants/hospitalConfig';
+import type { SurveyAnswer, SurveyFormErrors, SurveyFormState } from '../types/survey';
+import questionsData from '../questions/surveyQuestions.json';
 
 const INITIAL_STATE: SurveyFormState = {
-  score: null,
-  purpose: null,
-  language: CONFIG.languages[0],
-  staffName: null,
+  patientName: '',
+  examType: '',
+  previousExam: '',
+  examPain: '',
+  doctorExplanation: '',
+  waitingTime: '',
+  nurseResponse: '',
+  receptionResponse: '',
+  nextTime: '',
+  recommend: '',
+  reason: [],
+  comments: '',
 };
 
-export function useSurveyForm(initialStaff?: string) {
-  const [form, setForm] = useState<SurveyFormState>({
-    ...INITIAL_STATE,
-    staffName: initialStaff || null,
-  });
+export function useSurveyForm() {
+  const [form, setForm] = useState<SurveyFormState>(INITIAL_STATE);
   const [errors, setErrors] = useState<SurveyFormErrors>({});
   const [submitting, setSubmitting] = useState(false);
 
-  const isHighScore = useMemo(
-    () => (form.score ?? 0) >= CONFIG.highScoreThreshold,
-    [form.score],
-  );
-
-  const setScore = (score: number) => {
-    setForm((prev) => ({ ...prev, score }));
-    setErrors((prev) => ({ ...prev, score: undefined }));
-  };
-
-  const setPurpose = (purpose: string) => {
-    setForm((prev) => ({ ...prev, purpose }));
-    setErrors((prev) => ({ ...prev, purpose: undefined }));
-  };
-
-  const setLanguage = (language: string) => {
-    setForm((prev) => ({ ...prev, language }));
+  const updateField = <K extends keyof SurveyFormState>(
+    field: K,
+    value: SurveyFormState[K]
+  ) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
   const validate = () => {
     const nextErrors: SurveyFormErrors = {};
+    let isValid = true;
 
-    if (!form.score) {
-      nextErrors.score = '満足度を選択してください';
-    }
-
-    if (!form.purpose) {
-      nextErrors.purpose = 'ご利用目的を選択してください';
-    }
+    questionsData.forEach((question) => {
+      if (question.required) {
+        const val = form[question.id as keyof SurveyFormState];
+        if (
+          !val ||
+          (Array.isArray(val) && val.length === 0) ||
+          (typeof val === 'string' && val.trim() === '')
+        ) {
+          nextErrors[question.id as keyof SurveyFormState] = '必須項目です';
+          isValid = false;
+        }
+      }
+    });
 
     setErrors(nextErrors);
-    return Object.keys(nextErrors).length === 0;
+    return isValid;
   };
 
   const submit = async () => {
-    if (!validate() || !form.score || !form.purpose) {
-      return { success: false } as const;
+    if (!validate()) {
+      return { success: false, error: 'Validation failed' } as const;
+    }
+
+    if (!hospitalConfig.gasUrl) {
+      return { success: false, error: 'GAS URL is not configured' } as const;
     }
 
     setSubmitting(true);
 
     try {
       const payload: SurveyAnswer = {
-        score: form.score,
-        purpose: form.purpose,
-        language: form.language,
-        submittedAt: firestore.Timestamp.now(),
-        isHighScore: form.score >= CONFIG.highScoreThreshold,
-        staffName: form.staffName,
+        ...form,
+        submittedAt: new Date().toISOString(),
       };
 
-      await firestore().collection('surveys').add(payload);
+      const response = await fetch(hospitalConfig.gasUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8', // CORS回避のためtext/plain
+        },
+        body: JSON.stringify(payload),
+      });
 
-      return {
-        success: true,
-        isHighScore: payload.isHighScore,
-        submittedAt: payload.submittedAt.toDate().toISOString(),
-      } as const;
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to submit');
+      }
+
+      return { success: true } as const;
     } catch (error) {
       return { success: false, error } as const;
     } finally {
@@ -88,10 +100,7 @@ export function useSurveyForm(initialStaff?: string) {
     form,
     errors,
     submitting,
-    isHighScore,
-    setScore,
-    setPurpose,
-    setLanguage,
+    updateField,
     submit,
   };
 }

@@ -5,9 +5,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'brand-blue': '#4a7a95',
-        'brand-border': '#b0c4d0',
-        'panel-bg': '#f5f5f5',
+        primary: {
+          DEFAULT: '#3B82F6', // やさしいブルー
+          light: '#EBF5FF',
+          dark: '#2563EB',
+        },
+        surface: '#FFFFFF',
+        background: '#F8FAFC',
+        text: {
+          DEFAULT: '#1E293B',
+          muted: '#64748B',
+        },
+        error: '#EF4444',
       },
       fontFamily: {
         noto: ['NotoSansJP'],

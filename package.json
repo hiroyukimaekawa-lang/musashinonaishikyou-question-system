@@ -15,8 +15,6 @@
   },
   "dependencies": {
     "@expo-google-fonts/noto-sans-jp": "^0.4.2",
-    "@react-native-firebase/app": "^22.0.0",
-    "@react-native-firebase/firestore": "^22.0.0",
     "@react-native-picker/picker": "^2.11.1",
     "babel-preset-expo": "~54.0.10",
     "expo": "~54.0.0",

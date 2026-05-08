@@ -1,0 +1,84 @@
+[
+  {
+    "id": "patientName",
+    "type": "text",
+    "title": "患者様のお名前",
+    "required": true
+  },
+  {
+    "id": "examType",
+    "type": "radio",
+    "title": "検査種別",
+    "options": ["胃カメラ", "大腸カメラ", "両方"],
+    "required": true
+  },
+  {
+    "id": "previousExam",
+    "type": "radio",
+    "title": "以前当院で検査を受けたことはありますか？",
+    "options": ["はい", "いいえ"],
+    "required": true
+  },
+  {
+    "id": "examPain",
+    "type": "rating",
+    "title": "検査の苦痛があったかどうか",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "doctorExplanation",
+    "type": "rating",
+    "title": "医師の診察・検査後の説明が十分だったか",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "waitingTime",
+    "type": "rating",
+    "title": "待ち時間が適切だったか",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "nurseResponse",
+    "type": "rating",
+    "title": "看護師の対応",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "receptionResponse",
+    "type": "rating",
+    "title": "受付の対応",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "nextTime",
+    "type": "rating",
+    "title": "次回も当院で受けたいと思うか",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "recommend",
+    "type": "rating",
+    "title": "家族や友人に勧めたいと思うか",
+    "options": ["とても満足", "満足", "普通", "やや不満", "不満"],
+    "required": true
+  },
+  {
+    "id": "reason",
+    "type": "checkbox",
+    "title": "当院を選ばれた理由（複数選択可）",
+    "options": ["HP", "知人紹介", "通りすがり", "看板", "医療機関からの紹介"],
+    "required": true
+  },
+  {
+    "id": "comments",
+    "type": "textarea",
+    "title": "気づいた点・ご意見",
+    "required": false
+  }
+]

@@ -2,31 +2,41 @@ import { Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
   options: string[];
-  value: string;
-  onChange: (value: string) => void;
+  values: string[];
+  onChange: (values: string[]) => void;
   hasError?: boolean;
 }
 
-export function RadioGroup({ options, value, onChange, hasError }: Props) {
+export function CheckboxGroup({ options, values, onChange, hasError }: Props) {
+  const toggle = (option: string) => {
+    if (values.includes(option)) {
+      onChange(values.filter((v) => v !== option));
+    } else {
+      onChange([...values, option]);
+    }
+  };
+
   return (
     <View className="flex-row flex-wrap gap-3">
       {options.map((option) => {
-        const isSelected = value === option;
+        const isSelected = values.includes(option);
         return (
           <TouchableOpacity
             key={option}
             activeOpacity={0.7}
-            onPress={() => onChange(option)}
+            onPress={() => toggle(option)}
             className={`flex-row items-center rounded-lg border p-4 ${
               isSelected ? 'border-primary bg-primary-light' : 'border-gray-200 bg-white'
             } ${hasError ? 'border-error' : ''}`}
           >
             <View
-              className={`mr-3 h-5 w-5 items-center justify-center rounded-full border-2 ${
-                isSelected ? 'border-primary' : 'border-gray-300'
+              className={`mr-3 h-5 w-5 items-center justify-center rounded border ${
+                isSelected ? 'border-primary bg-primary' : 'border-gray-300'
               }`}
             >
-              {isSelected && <View className="h-2.5 w-2.5 rounded-full bg-primary" />}
+              {isSelected && (
+                <View className="h-2.5 w-2.5 rounded-[1px] bg-white" />
+              )}
             </View>
             <Text
               className={`font-noto text-base ${
