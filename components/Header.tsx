@@ -12,7 +12,7 @@ export function Header() {
         <Text 
           numberOfLines={1}
           adjustsFontSizeToFit
-          className="font-noto text-lg sm:text-xl font-bold tracking-tighter text-[#5E969E] flex-1"
+          className="font-noto text-lg sm:text-xl font-bold tracking-tighter text-[#5E969E] flex-1 sm:flex-none text-center"
         >
           むさしの内視鏡・胃腸内科クリニック
         </Text>
